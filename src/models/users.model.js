@@ -9,21 +9,23 @@ const schema = new mongoose.Schema({
     },
     profilePic: {
         type: String,
+        required: false
     },
     email:{
         type: String,
         required: true,
-        match: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/,
+        match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
     },
     password:{
         type: String,
-        required: true
+        required: true,
+        minLength:8
     },
-    created_at: {
+    createdAt: {
         type: Date,
         default: Date.now
     },
-    updated_at: {
+    updatedAt: {
         type: Date,
         default: Date.now
     }

@@ -1,6 +1,7 @@
 const createError = require("http-errors")
 const Users = require("../models/users.model")
 
+
 async function create(User){
     const userFound = await Users.findOne({email: User.email})
 
@@ -9,7 +10,6 @@ async function create(User){
     }
     
 }
-
 
 async function getById(id){
     const user = await Users.findById(id)

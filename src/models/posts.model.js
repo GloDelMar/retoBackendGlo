@@ -23,11 +23,11 @@ const schema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "user"
     },
-    creat_at: {
+    createdat: {
         type: Date,
         default: Date.now
     },
-    update_at: {
+    updatedat: {
         type: Date,
         default: Date.now
     }

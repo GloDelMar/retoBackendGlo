@@ -4,8 +4,16 @@ const auth = require("../middlewares/auth.middleware")
 
 const router = express.Router()
 
-router.post("/", auth, (request, response)=>{
+router.post("/", auth, async (request, response)=>{
     try{
+       const post = request.body
+       const createdPost = await postsUsecase.createPost(post)
+
+       response.json({
+        success:true,
+        message: "Post created",
+        data: {createdPost}
+       }) 
 
     }catch(error){
         response.status(error.status || 500)
@@ -16,9 +24,15 @@ router.post("/", auth, (request, response)=>{
     }
 })
 
-router.get("/", (request, response)=>{
+router.get("/", async (request, response)=>{
     try{
+        const post = await postsUsecase.getAll()
 
+        response.json({
+            success: true,
+            message: "All posts",
+            data: {post}
+        })
     }catch(error){
         response.status(error.status || 500)
         response.json({
@@ -28,9 +42,18 @@ router.get("/", (request, response)=>{
     }
 })
 
-router.patch("/:id", auth, (request, response)=>{
+router.patch("/:id", auth, async (request, response)=>{
     try{
 
+            const {id}= request.params
+            const post = request.body
+            const updatedPost = await postsUsecase.upDateById(id, post)
+
+            response.json({
+                success: true,
+                message: "Post Update",
+                data: {updatedPost}
+            })
     }catch(error){
         response.status(error.status || 500)
         response.json({
@@ -40,9 +63,16 @@ router.patch("/:id", auth, (request, response)=>{
     }
 })
 
-router.delete("/:id", auth, (request, response)=>{
+router.delete("/:id", auth, async (request, response)=>{
     try{
+            const{id}= request.params
+            const deletedPost = await postsUsecase.deleteById(id)
 
+            response.json({
+                success: true,
+                message: "Post deleted",
+                data: {deletedPost}
+            })
     }catch(error){
         response.status(error.status || 500)
         response.json({

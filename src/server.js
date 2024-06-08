@@ -9,11 +9,12 @@ const authRouter = require("./routers/auth.router")
 const app = express()
 
 app.use(cors())
-app(express.json())
+app.use(express.json())
 
 app.use("/posts", postsRouter)
 app.use("/users", usersRouter)
-app.use("auth", authRouter)
+app.use("/auth/login", authRouter)
+
 
 app.get("/", (request, response)=>{
     response.json({

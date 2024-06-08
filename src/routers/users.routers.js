@@ -4,9 +4,16 @@ const usersUsecase = require("../usecases/users.usecase")
 
 const router = express.Router()
 
-router.get("/:id", (request, response)=>{
+router.get("/:id", async (request, response)=>{
     try{
+        const {id}= request.params
+        const user = await usersUsecase.getById(id)
 
+        response.json({
+            success: true,
+            message: "User found",
+            data: user
+        })
     }catch(error){
         response.status(error.status || 500)
         response.json({
@@ -16,9 +23,16 @@ router.get("/:id", (request, response)=>{
     }
 })
 
-router.post("/", (request, response)=>{
+router.post("/", async (request, response)=>{
     try{
+        const user = request.body
+        const createdUser = await usersUsecase.create(user)
 
+        response.json({
+            success: true,
+            message: "User created",
+            data: {createdUser}
+        })
     }catch(error){
         response.status(error.status || 500)
         response.json({
