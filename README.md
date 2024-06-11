@@ -88,4 +88,9 @@ Body de la solicitud (JSON)
             "password": "tiburonsin123"
         }
 
-## ¡Listo para empezar!
+
+## ¡Listo! Ya puedes empezar!
+
+NOTA: Esta API se encuentra desplegada en:
+
+https://retobackendglo.onrender.com
