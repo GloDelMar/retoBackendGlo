@@ -16,11 +16,14 @@ async function createPost (PostsData){
 }
 
 async function getAll(search) {
+    let query = {}
+
+   
     if (search && search.trim() !== '') {
-        return await Posts.find({ title: { $regex: search, $options: 'i' } });
-    }        
-        return await Posts.find();
-    
+        query = { title: { $regex: search, $options: 'i' } }
+    }
+
+       return await Posts.find(query)
 }
 
 async function upDateById(id, postsData){
@@ -47,8 +50,9 @@ async function deleteById(userId, postId){
     }
 
 
-    const deletedPost = await Posts.findByIdAndDelete(postId)
-    return deletedPost
+    await Posts.findByIdAndDelete(postId)
+
+    return post
 }
 
 

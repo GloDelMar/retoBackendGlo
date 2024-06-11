@@ -9,7 +9,7 @@ const schema = new mongoose.Schema({
         minLength: 2,
         maxLength: 40
     },
-    image: {
+    imagen: {
         type: String,
         required: false
     },

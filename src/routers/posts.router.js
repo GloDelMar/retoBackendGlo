@@ -24,23 +24,30 @@ router.post("/", auth, async (request, response)=>{
     }
 })
 
-router.get("/", async (request, response)=>{
-    try{
-        const post = await postsUsecase.getAll()
+router.get("/", async (request, response) => {
+    try {
+        const search = request.query.search
+
+        let posts;
+        if (search && search.trim() !== '') {
+            posts = await postsUsecase.getAll(search)
+        } else {
+            posts = await postsUsecase.getAll()
+        }
 
         response.json({
             success: true,
             message: "All posts",
-            data: {post}
-        })
-    }catch(error){
-        response.status(error.status || 500)
-        response.json({
+            data: { posts }
+        });
+    } catch (error) {
+        response.status(error.status || 500).json({
             success: false,
             error: error.message
-        })
+        });
     }
-})
+});
+
 
 router.patch("/:id", auth, async (request, response)=>{
     try{
@@ -66,7 +73,8 @@ router.patch("/:id", auth, async (request, response)=>{
 router.delete("/:id", auth, async (request, response)=>{
     try{
             const{id}= request.params
-            const deletedPost = await postsUsecase.deleteById(id)
+            const userId = request.userId
+            const deletedPost = await postsUsecase.deleteById(userId, id)
 
             response.json({
                 success: true,
