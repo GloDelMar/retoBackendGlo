@@ -7,7 +7,7 @@ function encrypt(text){
 }
 
 function compare(plainText, hash){
-    return bcrypt.compare(plainText, hash)
+       return bcrypt.compare(plainText, hash)
 }
 
 module.exports={

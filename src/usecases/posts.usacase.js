@@ -10,8 +10,9 @@ async function createPost (PostsData){
         throw createError(409, "Title already used")
     }
     
-    return Posts.create
-
+   
+    const newPost = await Posts.create(PostsData)
+    return newPost
 }
 
 async function getAll(search) {
@@ -23,15 +24,31 @@ async function getAll(search) {
 }
 
 async function upDateById(id, postsData){
+
+    if ('user' in postsData) {
+        throw new Error('User field cannot be updated');
+    }
     const updatedPost = await Posts.findByIdAndUpdate(id, postsData,{new: true})
 
     return updatedPost
 }
 
-async function deleteById(id){
-    const deletedPost = await Posts.findByIdAndDelete(id)
-    return deletedPost
+async function deleteById(userId, postId){
     
+    const post = await Posts.findById(postId)
+
+    if (!post) {
+        throw createError(404, "Post not found")
+    }
+
+  
+    if (post.userId !== userId) {
+        throw createError(403, "Unauthorized: You are not the owner of this post")
+    }
+
+
+    const deletedPost = await Posts.findByIdAndDelete(postId)
+    return deletedPost
 }
 
 
