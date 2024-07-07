@@ -14,17 +14,28 @@ async function createPost (PostsData){
     const newPost = await Posts.create(PostsData)
     return newPost
 }
-
 async function getAll(search) {
-    let query = {}
+    let query = {};
 
-   
     if (search && search.trim() !== '') {
-        query = { title: { $regex: search, $options: 'i' } }
+        query = { title: { $regex: search, $options: 'i' } };
     }
 
-       return await Posts.find(query)
+    const posts = await Posts.find(query);
+    return posts; 
 }
+
+async function getAll(search) {
+    let query = {};
+
+    if (search && search.trim() !== '') {
+        query = { title: { $regex: search, $options: 'i' } };
+    }
+
+    const posts = await Posts.find(query);
+    return posts; // Asegúrate de que siempre devuelva un array
+}
+
 
 async function upDateById(id, postsData){
 

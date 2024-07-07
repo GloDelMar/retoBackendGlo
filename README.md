@@ -22,7 +22,7 @@ Estas peticiones se recomienda hacerlas en Thunder Client para mayor claridad y 
 
 #### Obtener Usuario por su id
 
-- GET http://localhost:8080/:id
+- GET http://localhost:8080/users/id
 
 #### Crear un nuevo Usuario
 
@@ -45,7 +45,7 @@ Estas peticiones se recomienda hacerlas en Thunder Client para mayor claridad y 
 
 #### Crear un nuevo post
 
-- POST http://localhost:8080/post
+- POST http://localhost:8080/posts
 
  Body de la solicitud (JSON)
 
@@ -53,12 +53,12 @@ Estas peticiones se recomienda hacerlas en Thunder Client para mayor claridad y 
             "title": "El título",
             "imagen": "CodigoDeLaImagen",
             "body": "EL contenido de la publicación, maximo 400 caracteres",
-            "user": "Nombre de usuario registrado"
+            "name": "Nombre de usuario registrado"
         }
 
 #### Acualización de un Post ya exitente
 
-- PATCH http://localhost:8080/post:id
+- PATCH http://localhost:8080/posts/id
 
 Body de la solicitud (JSON)
 
@@ -69,7 +69,7 @@ Body de la solicitud (JSON)
 
 #### Eliminar un Post
 
-- DELETE http://localhost:8080/posts:id
+- DELETE http://localhost:8080/posts/id
 
 #### Buscar un post por el título
 
