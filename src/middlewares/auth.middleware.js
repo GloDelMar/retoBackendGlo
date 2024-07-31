@@ -1,40 +1,37 @@
-const createError = require("http-errors");
-const usersUsecase = require("../usecases/users.usecase");
-const jwt = require("../lib/jwt");
+const createError = require("http-errors")
+const usersUsecase = require ("../usecases/users.usecase")
+const jwt = require("../lib/jwt")
 
-async function auth(request, response, next) {
-    try {
-        const authHeader = request.headers.authorization;
-        if (!authHeader) {
-            throw createError(401, "JWT required");
+async function auth(request, response, next){
+    try{
+        const token = request.headers.authorization
+
+        if(!token){
+            throw createError(401, "JWT id required")
         }
 
-        // Extraer el token del encabezado
-        const token = authHeader.split(' ')[1];
-        if (!token) {
-            throw createError(401, "Token required");
-        }
-
-        const payload = jwt.verify(token);
+        const payload = jwt.verify(token)
         if (!payload || !payload.id) {
-            throw createError(401, "Invalid JWT");
+            throw createError(401, "Invalid JWT")
         }
 
-        const user = await usersUsecase.getById(payload.id);
+
+        const user = await usersUsecase.getById(payload.id)
+        
         if (!user) {
-            throw createError(401, "User not found");
+            throw createError(401, "User not found")
         }
+        request.user = user
 
-        request.user = user;
-        next();
+        next()
 
-    } catch (error) {
-        response.status(error.status || 401);
+    }catch(error){
+        response.status(error.status || 401)
         response.json({
             success: false,
             error: error.message
-        });
+        })
     }
 }
 
-module.exports = auth;
+module.exports = auth
